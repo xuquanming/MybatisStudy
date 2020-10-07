@@ -6,6 +6,11 @@
 <configuration>
     <!--引入外部配置文件-->
     <properties resource="db.properties"/>
+    
+    <!--设置-->
+    <settings>
+        <setting name="logImpl" value="LOG4J"/>
+    </settings>
     <!--类取别名-->
     <typeAliases>
         <package name="com.company.pojo"/>

@@ -1,0 +1,3 @@
+[INFO][20-10-08][com.company.dao.UserTest]info:进入了testLog4j
+[DEBUG][20-10-08][com.company.dao.UserTest]debug:进入了testLog4j
+[ERROR][20-10-08][com.company.dao.UserTest]error:进入了testLog4j
