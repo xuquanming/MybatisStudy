@@ -10,14 +10,19 @@
         values(#{id},#{title},#{author},#{createTime},#{views});
     </insert>
 
-    <select id="queryBlogIF" parameterType="map" resultType="blog">
-        select * from mybatis.blog where 1=1
+    <sql id="if-title-author">
         <if test="title!=null">
-            and title=#{title}
+             title=#{title}
         </if>
         <if test="author!=null">
             and author=#{author}
         </if>
+    </sql>
+    <select id="queryBlogIF" parameterType="map" resultType="blog">
+        select * from mybatis.blog 
+        <where>
+            <include refid="if-title-author"></include>
+        </where>
     </select>
 
   <!--  <select id="queryBlogChoose" parameterType="map" resultType="blog">
@@ -46,6 +51,30 @@
                     and views = #{views}
                 </otherwise>
             </choose>
+        </where>
+    </select>
+
+    <update id="updateBlog" parameterType="map">
+        update mybatis.blog
+        <set>
+            <if test="title!=null">
+                title = #{title},
+            </if>
+            <if test="author!=null">
+                author = #{author}
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+
+    <!--我们现在传递一个万能的map，这个map中存在一个集合-->
+    <select id="queryBlogForeach" parameterType="map" resultType="blog">
+        select * from mybatis.blog
+        <where>
+            <foreach collection="ids" item="id" open="and (" close=")" separator="or">
+                id = #{id}
+            </foreach>
         </where>
     </select>
 </mapper>

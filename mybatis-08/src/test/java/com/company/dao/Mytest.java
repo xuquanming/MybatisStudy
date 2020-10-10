@@ -1,16 +1,12 @@
 package com.company.dao;
 
-
 import com.company.pojo.Blog;
 import com.company.utils.IDutils;
 import com.company.utils.MybatisUtils;
 import org.apache.ibatis.session.SqlSession;
 import org.junit.Test;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Mytest {
 
@@ -71,5 +67,33 @@ public class Mytest {
             System.out.println(blog);
         }
         sqlSession.close();
+    }
+
+    @Test
+    public void updateBlog(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+        HashMap map = new HashMap();
+        map.put("title","Java如此简单");
+        map.put("author","狂神说");
+        map.put("id","ab056fbdc70046798700bf486979afab");
+        int i = mapper.updateBlog(map);
+        sqlSession.close();
+
+    }
+
+    @Test
+    public void queryBlogForeach(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        BlogMapper mapper = sqlSession.getMapper(BlogMapper.class);
+        HashMap map = new HashMap();
+        ArrayList<Integer> ids = new ArrayList<Integer>();
+        map.put("ids",ids);
+        List<Blog> blogs = mapper.queryBlogForeach(map);
+        for (Blog blog : blogs) {
+            System.out.println(blog);
+        }
+        sqlSession.close();
+
     }
 }
